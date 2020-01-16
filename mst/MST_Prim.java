@@ -10,15 +10,15 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class MST_Prim {
-	// 1. Á¤Á¡ Áß ¾Æ¹«°Å³ª ÀÏ´Ü ½ÃÀÛ Á¤Á¡ °í¸£±â
-	// 2. °í¸¥ Á¤Á¡¿¡ ¿¬°áµÈ °£¼±µé Áß ÃÖ¼Òºñ¿ë °£¼± °í¸£±â -> °£¼± µû¶ó°¡¸é ÀÖ´Â Á¤Á¡À» ¹æ¹®ÇÑ°Ô µÊ
-	// 3. ¾Õ¿¡¼­ ¼±ÅÃÇÑ ¸ğµç Á¤Á¡µé¿¡ ¿¬°áµÈ °£¼± Áß ÃÖ¼Ò ºñ¿ë °£¼± Ã£¾Æ¼­ ¶Ç ¼±ÅÃ.
-	// 4. ¸ğµç N°³ÀÇ Á¤Á¡ÀÌ ´Ù ¼±ÅÃµÉ ¶§ ±îÁö 2-3 ¹İº¹.
+	// 1. ì •ì  ì¤‘ ì•„ë¬´ê±°ë‚˜ ì¼ë‹¨ ì‹œì‘ ì •ì  ê³ ë¥´ê¸°
+	// 2. ê³ ë¥¸ ì •ì ì— ì—°ê²°ëœ ê°„ì„ ë“¤ ì¤‘ ìµœì†Œë¹„ìš© ê°„ì„  ê³ ë¥´ê¸° -> ê°„ì„  ë”°ë¼ê°€ë©´ ìˆëŠ” ì •ì ì„ ë°©ë¬¸í•œê²Œ ë¨
+	// 3. ì•ì—ì„œ ì„ íƒí•œ ëª¨ë“  ì •ì ë“¤ì— ì—°ê²°ëœ ê°„ì„  ì¤‘ ìµœì†Œ ë¹„ìš© ê°„ì„  ì°¾ì•„ì„œ ë˜ ì„ íƒ.
+	// 4. ëª¨ë“  Nê°œì˜ ì •ì ì´ ë‹¤ ì„ íƒë  ë•Œ ê¹Œì§€ 2-3 ë°˜ë³µ.
 	static int N;
 	static int E;
 	
 	static LinkedList<Edge> [] graph;
-	static boolean visit[]; // Á¤Á¡ÀÇ ¹æ¹® ¿©ºÎ
+	static boolean visit[]; // ì •ì ì˜ ë°©ë¬¸ ì—¬ë¶€
 	static ArrayList<Edge> mst;
 	static class Edge
 	{
@@ -66,31 +66,31 @@ public class MST_Prim {
 	}
 	static void makeMst() {
 		// TODO Auto-generated method stub
-		PriorityQueue<Edge> pq = new PriorityQueue<>(new EdgeComparator()); // °£¼±µé
-		Queue<Integer> que = new LinkedList<>(); // Á¤Á¡
-		que.add(1); // 1¹øºÎÅÍ ½ÃÀÛ
+		PriorityQueue<Edge> pq = new PriorityQueue<>(new EdgeComparator()); // ê°„ì„ ë“¤
+		Queue<Integer> que = new LinkedList<>(); // ì •ì 
+		que.add(1); // 1ë²ˆë¶€í„° ì‹œì‘
 		
 		
 		while(!que.isEmpty())
 		{
-			int nowV = que.poll(); // Á¤Á¡ vertex ¹æ¹®
+			int nowV = que.poll(); // ì •ì  vertex ë°©ë¬¸
 			visit[nowV] = true;
 			
-			LinkedList<Edge> nowEdges = graph[nowV]; // ÇöÀç Á¤Á¡¿¡¼­ ¼±ÅÃ °¡´ÉÇÑ Á¤Á¡
+			LinkedList<Edge> nowEdges = graph[nowV]; // í˜„ì¬ ì •ì ì—ì„œ ì„ íƒ ê°€ëŠ¥í•œ ì •ì 
 			for(Edge e : nowEdges)
 			{
-				if(!visit[e.end]) // ¿¬°áµÈ °£¼±µé Áß¿¡ ±× ³¡¿¡ ÀÖ´Â Á¤Á¡ÀÌ ¹æ¹®ÇÑ Àû ¾ø´Â °£¼±¸¸ ¼±ÅÃÇØ¼­
+				if(!visit[e.end]) // ì—°ê²°ëœ ê°„ì„ ë“¤ ì¤‘ì— ê·¸ ëì— ìˆëŠ” ì •ì ì´ ë°©ë¬¸í•œ ì  ì—†ëŠ” ê°„ì„ ë§Œ ì„ íƒí•´ì„œ
 				{
-					pq.add(e); // ¿ì¼±¼øÀ§ Å¥¿¡ Áı¾î³Ö¾îº¸ÀÚ.
+					pq.add(e); // ìš°ì„ ìˆœìœ„ íì— ì§‘ì–´ë„£ì–´ë³´ì.
 				}
 			}
 			while(!pq.isEmpty())
 			{
-				Edge s = pq.poll(); // ÈÄº¸ °£¼±¿¡¼­ ÃÖ¼ÒÀÎ ÇÏ³ª¸¦ ¼±ÅÃ
+				Edge s = pq.poll(); // í›„ë³´ ê°„ì„ ì—ì„œ ìµœì†Œì¸ í•˜ë‚˜ë¥¼ ì„ íƒ
 				if(!visit[s.end]) {
 					visit[s.end] = true;
 					mst.add(s);
-					que.add(s.end); // Áö±İ ¼±ÅÃµÈ Á¤Á¡µµ ¹æ¹® Å¥¿¡ ³Ö¾î ³õÀÚ.
+					que.add(s.end); // ì§€ê¸ˆ ì„ íƒëœ ì •ì ë„ ë°©ë¬¸ íì— ë„£ì–´ ë†“ì.
 					break;
 				}
 			}
