@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Dijkstra {
-	// ÀÎÁ¢Çà·ÄÀ» °¡Áö°í ÀÖ´Ù. Áï °£¼± Á¤º¸ ±×·¡ÇÁ¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¿§ ÃÖ´Ü °Å¸®  °è»êÇÔ.
-	// 1. ¸ðµç Á¤Á¡±îÁöÀÇ °Å¸®Á¤º¸¸¦ ÀÏ´Ü ÁÙ ¼ö ÀÖ´Â ÃÖ´ë °ªÀ¸·Î ¼¼ÆÃ
-	// 2. ½ÃÀÛ Á¤Á¡ÀÌ °áÁ¤µÇ¸é ÇØ´ç Á¤Á¡±îÁöÀÇ °Å¸®´Â 0À¸·Î Ç¥½Ã, ±×¸®°í ½ÃÀÛ Á¤Á¡À» ¹æ¹® Ç¥½Ã
-	// 3. ½ÃÀÛ ³ëµå¿Í ÀÎÁ¢ÇÑ ³ëµåµéÀÇ °Å¸® °ªÀ» °»½Å
-	// 4. ¾ÆÁ÷ ¹æ¹®ÇÏÁö ¾ÊÀº ³ëµå Áß °Å¸®°¡ °¡Àå °¡±î¿î ³ëµå(Minimum Node)¸¦ Ã£±â.
-	// 5. Ã£Àº ³ëµå(minNode)¿¡ ¹æ¹®ÇÑ ´ÙÀ½ minNode¿¡¼­ ÀÎÁ¢ÇÑ Á¤Á¡µéÀÇ °Å¸® Á¤º¸¸¦ ¶Ç °»½Å
-	// dist[minNode] + (minNode~minÀÇ ÀÎÁ¢ ³ëµå±îÁöÀÇ °Å¸®)¶û ÀÎÁ¢ Çà·Ä¿¡ ±â·ÏµÈ °ªÀÌ¶û ºñ±³
+	// ì¸ì ‘í–‰ë ¬ì„ ê°€ì§€ê³  ìžˆë‹¤. ì¦‰ ê°„ì„  ì •ë³´ ê·¸ëž˜í”„ë¥¼ ê°€ì§€ê³  ìžˆëŠ” ìƒíƒœì—£ ìµœë‹¨ ê±°ë¦¬  ê³„ì‚°í•¨.
+	// 1. ëª¨ë“  ì •ì ê¹Œì§€ì˜ ê±°ë¦¬ì •ë³´ë¥¼ ì¼ë‹¨ ì¤„ ìˆ˜ ìžˆëŠ” ìµœëŒ€ ê°’ìœ¼ë¡œ ì„¸íŒ…
+	// 2. ì‹œìž‘ ì •ì ì´ ê²°ì •ë˜ë©´ í•´ë‹¹ ì •ì ê¹Œì§€ì˜ ê±°ë¦¬ëŠ” 0ìœ¼ë¡œ í‘œì‹œ, ê·¸ë¦¬ê³  ì‹œìž‘ ì •ì ì„ ë°©ë¬¸ í‘œì‹œ
+	// 3. ì‹œìž‘ ë…¸ë“œì™€ ì¸ì ‘í•œ ë…¸ë“œë“¤ì˜ ê±°ë¦¬ ê°’ì„ ê°±ì‹ 
+	// 4. ì•„ì§ ë°©ë¬¸í•˜ì§€ ì•Šì€ ë…¸ë“œ ì¤‘ ê±°ë¦¬ê°€ ê°€ìž¥ ê°€ê¹Œìš´ ë…¸ë“œ(Minimum Node)ë¥¼ ì°¾ê¸°.
+	// 5. ì°¾ì€ ë…¸ë“œ(minNode)ì— ë°©ë¬¸í•œ ë‹¤ìŒ minNodeì—ì„œ ì¸ì ‘í•œ ì •ì ë“¤ì˜ ê±°ë¦¬ ì •ë³´ë¥¼ ë˜ ê°±ì‹ 
+	// dist[minNode] + (minNode~minì˜ ì¸ì ‘ ë…¸ë“œê¹Œì§€ì˜ ê±°ë¦¬)ëž‘ ì¸ì ‘ í–‰ë ¬ì— ê¸°ë¡ëœ ê°’ì´ëž‘ ë¹„êµ
 	
 	static int N, E;
 	static int maps[][];
