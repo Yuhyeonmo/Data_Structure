@@ -18,22 +18,22 @@ import java.util.Scanner;
  */
 public class BOJ_2309 {
 	static int nan [] = new int [9];
-	static int result [] = new int [9];
+	
 	static boolean check[] = new boolean[9];
-	static int flag = 0;
+	static int flag = 0; // 중복 출력을 방지하기 위한 변수
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
 		for(int i=0;i<9;i++){
 			nan[i] = sc.nextInt();
 		}
-		Arrays.sort(nan);
+		Arrays.sort(nan); // 오름차순으로 출력하기 위해서 미리 sort 함
 		dfs(0,0);
 
 	}
 	
 	public static void dfs(int depth , int index){
-		if(flag == 1) {
+		if(flag == 1) { // 이미 난쟁이를 발견함
 			return ;
 		}
 		
@@ -64,8 +64,11 @@ public class BOJ_2309 {
 		}
 		else {
 			for(int i=index; i<9;i++){
+				// 현재의 index 난쟁이를 선택함.
 				check[i] = true;
 				dfs(depth+1, index+1);
+				
+				//현재 index 난쟁이를 선택하지 않고 넘긴 경우.
 				check[i] = false;
 				dfs(depth, index+1);
 			}
