@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-/**가장 긴 증가하는 부분 수열 
+/**@author : YuHyeonMo
+ * 가장 긴 증가하는 부분 수열 
  문제 
 수열 A가 주어졌을 때, 가장 긴 증가하는 부분 수열을 구하는 프로그램을 작성하시오.
 
@@ -34,10 +35,10 @@ dp 배열을 어떻게 만들지에 대한 고민 -> 해당 위치까지의 가�
 public class BOJ_11053 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		int d[] = new int [N];
+		int d[] = new int [N]; // dp에 사용할 배열
 		int array[] = new int [N];
 		for(int i=0;i<N;i++){
 			array[i] = sc.nextInt();
@@ -46,10 +47,12 @@ public class BOJ_11053 {
 		int maxLen = -1;
 		for(int i=0;i<N;i++){
 			for(int j=0;j<i;j++){
+				// dp 조건부분
 				if(array[j]<array[i] && d[j]+1 > d[i]){
 					d[i] = d[j] + 1;
 				} 
 			}
+			
 			maxLen = Math.max(maxLen, d[i]);
 			
 		}
