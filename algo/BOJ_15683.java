@@ -14,8 +14,8 @@ CCTV는 감시할 수 있는 방향에 있는 칸 전체를 감시할 수 있다
 
 CCTV는 회전시킬 수 있는데, 회전은 항상 90도 방향으로 해야 하며, 감시하려고 하는 방향이 가로 또는 세로 방향이어야 한다.
 4 6
-0 0 # 0 0 0
-0 0 # 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
 0 0 1 0 6 0
 0 0 0 0 0 0
 
@@ -31,6 +31,7 @@ public class BOJ_15683 {
 	static int map[][];
 	static int N, M;
 	static int size;
+	static int min = Integer.MAX_VALUE;
 	static ArrayList<CCTV> cctv = new ArrayList<CCTV>();
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -51,15 +52,19 @@ public class BOJ_15683 {
 		}
 		size = cctv.size();
 		calc(0);
+		System.out.println(min);
 	}
 	public static void calc(int n){
 		if(n==size){
-			
+			int cnt = count();
+			if(min>cnt){
+				min = cnt;
+			}
 			return ;
 		}
 		
 		for(int i=0;i<4;i++){
-			cctv.get(i).d = i;
+			cctv.get(n).d = i;
 			calc(n+1);
 		}
 	}
@@ -69,92 +74,121 @@ public class BOJ_15683 {
 			tmp[c.r][c.c] = -1;
 			if(c.type==1){	
 				if(c.d==0){
-					for(int i=c.c;i>=0;i--){
-						if(map[c.r][i]==6){
-							break;
-						} else {
-							tmp[c.r][i] = -1;
-						}
-					}
+					see(tmp, c.r, c.c, 0);
 				} else if(c.d==1){
-					for(int i=c.r;i>=0;i--){
-						if(map[i][c.c]==6){
-							break;
-						} else {
-							tmp[i][c.c] = -1;
-						}
-					}
+					see(tmp, c.r, c.c, 1);
 				} else if(c.d==2){
-					for(int i=c.c;i<M;i++){
-						if(map[c.r][i]==6){
-							break;
-						} else {
-							tmp[c.r][i] = -1;
-						}
-					}
+					see(tmp, c.r, c.c, 2);
 				} else if(c.d==3){
-					for(int i=c.r;i<N;i++){
-						if(map[i][c.c]==6){
-							break;
-						} else {
-							tmp[i][c.c] = -1;
-						}
-					}
+					see(tmp, c.r, c.c, 3);
 				}
 			}
 			else if(c.type==2){
 				if(c.d==1 || c.d==3){
-					for(int i=c.r;i>=0;i--){
-						if(map[i][c.c]==6){
-							break;
-						} else {
-							tmp[i][c.c] = -1;
-						}
-					}
-					
-					for(int i=c.r;i<N;i++){
-						if(map[i][c.c]==6){
-							break;
-						} else {
-							tmp[i][c.c] = -1;
-						}
-					}
-					
+					see(tmp, c.r, c.c, 1);
+					see(tmp, c.r, c.c, 3);
+
 				} else if(c.d==0  || c.d==2){
-					
+					see(tmp, c.r, c.c, 0);
+					see(tmp, c.r, c.c, 2);
 				}
 			} 
 			else if(c.type==3){
 				if(c.d==0){
-					
+					see(tmp, c.r, c.c, 0);
+					see(tmp, c.r, c.c, 1);
+
 				} else if(c.d==1){
-					
+					see(tmp, c.r, c.c, 1);
+					see(tmp, c.r, c.c, 2);
+
 				} else if(c.d==2){
-					
+					see(tmp, c.r, c.c, 2);
+					see(tmp, c.r, c.c, 3);
+
 				} else if(c.d==3){
-					
+					see(tmp, c.r, c.c, 3);
+					see(tmp, c.r, c.c, 0);
 				}
 			} 
 			else if(c.type==4){
 				if(c.d==0){
-					
+					see(tmp, c.r, c.c, 0);
+					see(tmp, c.r, c.c, 1);
+					see(tmp, c.r, c.c, 3);
+
 				} else if(c.d==1){
-					
+					see(tmp, c.r, c.c, 1);
+					see(tmp, c.r, c.c, 0);
+					see(tmp, c.r, c.c, 2);
+
+
 				} else if(c.d==2){
-					
+					see(tmp, c.r, c.c, 2);
+					see(tmp, c.r, c.c, 1);
+					see(tmp, c.r, c.c, 3);
+
 				} else if(c.d==3){
-					
+					see(tmp, c.r, c.c, 3);
+					see(tmp, c.r, c.c, 2);
+					see(tmp, c.r, c.c, 0);
+
 				}
 			}
 			else if(c.type==5){
-				
-			}
-			
-			
+				see(tmp, c.r, c.c, 0);
+				see(tmp, c.r, c.c, 1);
+				see(tmp, c.r, c.c, 2);
+				see(tmp, c.r, c.c, 3);
+			}		
 		}
 		
+		int count =0;
+		for(int i=0;i<N;i++){
+			for(int j=0;j<M;j++){
+				if(tmp[i][j]==0 && map[i][j]!=6){
+					count++;
+				}
+			}
+		}
 		
-		return 0;
+		return count;
+	}
+	
+	public static void see(int [][] arr, int r, int c, int d){
+		if(d==0){
+			for(int i=c;i>=0;i--){
+				if(map[r][i]==6){
+					break;
+				} else {
+					arr[r][i] = -1;
+				}
+			}
+		} else if(d==1){
+			for(int i=r;i>=0;i--){
+				if(map[i][c]==6){
+					break;
+				} else {
+					arr[i][c] = -1;
+				}
+			}
+		} else if(d==2) {
+			for(int i=c;i<M;i++){
+				if(map[r][i]==6){
+					break;
+				} else {
+					arr[r][i] = -1;
+				}
+			}
+		} else if(d==3) {
+			for(int i=r;i<N;i++){
+				if(map[i][c]==6){
+					break;
+				} else {
+					arr[i][c] = -1;
+				}
+			}
+		}
 	}
 	
 	static class CCTV{
