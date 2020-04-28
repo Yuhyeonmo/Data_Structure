@@ -50,6 +50,8 @@ public class BOJ_15683 {
 				}
 			}
 		}
+		List tmp;
+		
 		size = cctv.size();
 		calc(0);
 		System.out.println(min);
