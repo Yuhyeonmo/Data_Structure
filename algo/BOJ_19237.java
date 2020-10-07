@@ -17,6 +17,8 @@ static int dx[] = {0,1,-1,0,0};
 static int dy[] = {0,0,0,1,-1};
 static int N,M,k;
 static int [][] map;
+static int [][] smellMap;
+static int cnt;
 public static void main(String [] args) throws IOException{
 	
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,6 +27,8 @@ public static void main(String [] args) throws IOException{
 	M = Integer.parseInt(st.nextToken());
 	k = Integer.parseInt(st.nextToken());
 	map = new int [N][N];
+	smellMap = new int [N][N];
+	cnt = 0;
 	ArrayList<shark> sharks = new ArrayList<shark>();
 	for(int i=0;i<N;i++){
 		st = new StringTokenizer(br.readLine());
@@ -32,6 +36,7 @@ public static void main(String [] args) throws IOException{
 			map[i][j] = Integer.parseInt(st.nextToken());
 			if(map[i][j]!=0){
 				sharks.add(new shark(i,j,map[i][j]));
+				smellMap[i][j] = k;
 			}		
 		}
 	}
@@ -47,6 +52,68 @@ public static void main(String [] args) throws IOException{
 		st = new StringTokenizer(br.readLine());
 		for(int j=0;j<4;j++){
 			sharks.get(i/4).p.get(i%4).add(Integer.parseInt(st.nextToken()));
+		}
+	}
+	
+	
+}
+
+public static void run(ArrayList<shark> s){
+	
+	while(s.size()!=1){
+		
+		cnt++;
+		movesharks(s);
+		deletesharks(s);
+		deleteSmell();
+	
+	}	
+}
+
+public static void movesharks(ArrayList<shark> s){
+	
+	for(shark tmp : s){
+		
+		ArrayList<Integer> pr = new ArrayList<Integer>();
+		pr = tmp.p.get(tmp.dir);
+		
+		for(int sdir : pr){
+			
+			int tx = tmp.x + dx[sdir];
+			int ty = tmp.y + dy[sdir];
+			if(tx<0 || ty<0 || tx>=N || ty>=N || smellMap[tx][ty]!=0){
+				continue;
+			}
+			else {
+				tmp.dir = sdir;
+				tmp.x = tx;
+				tmp.y = ty;
+				break;
+			}	
+		}	
+	}
+	
+}
+public static void deletesharks(ArrayList<shark> s){
+	
+	for(shark tmp : s){
+		
+		if(smellMap[tmp.x][tmp.y]!=0){
+			s.remove(tmp);
+		}
+		else {
+			smellMap[tmp.x][tmp.y] = k+1;
+		}
+		
+	}
+	
+}
+public static void deleteSmell(){
+	for(int i=0;i<N;i++){
+		for(int j=0;j<N;j++){
+			if(smellMap[i][j]>0){
+				smellMap[i][j]--;
+			}
 		}
 	}
 }
